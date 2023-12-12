@@ -14,6 +14,10 @@
 
       <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/">Home</v-btn>
       <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/about">About</v-btn>
+      <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/create">Create</v-btn>
+      <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/read">Read</v-btn>
+      <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/update/1">Update</v-btn>
+      <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/delete/1">Delete</v-btn>
 
       <v-spacer></v-spacer>
 
