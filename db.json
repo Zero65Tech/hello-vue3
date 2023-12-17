@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "first_name": "Gargi",
+      "last_name": "Bharadwaj",
+      "collection": 10
+    },
+    {
+      "id": 2,
+      "first_name": "G",
+      "last_name": "B",
+      "collection": 14
+    },
+    {
+      "id": 3,
+      "first_name": "G1",
+      "last_name": "B1",
+      "collection": 11
+    },
+    {
+      "id": 4,
+      "first_name": "G2",
+      "last_name": "B2",
+      "collection": 12
+    },
+    {
+      "id": 5,
+      "first_name": "G3",
+      "last_name": "B3",
+      "collection": 13
+    }
+  ]
+}

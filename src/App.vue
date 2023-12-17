@@ -14,7 +14,7 @@
 
       <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/">Home</v-btn>
       <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/about">About</v-btn>
-
+      <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/actions">Actions</v-btn>
       <v-spacer></v-spacer>
 
       <div ref="GoogleLoginButton" class="mr-4" style="display:none;"></div>
@@ -40,19 +40,19 @@
 </template>
 
 <script>
-import { RouterLink, RouterView } from 'vue-router'
-import axios from "axios";
+import { RouterLink, RouterView } from 'vue-router';
+import axios from 'axios';
 
 export default {
-
   data() {
     return {
       location: undefined,
       session: undefined,
       snackbar: false,
       snackbarText: '',
-    }
+    };
   },
+
 
   async mounted() {
 
