@@ -14,6 +14,7 @@
 
       <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/">Home</v-btn>
       <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/about">About</v-btn>
+      <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/actions">Actions</v-btn>
 
       <v-spacer></v-spacer>
 
