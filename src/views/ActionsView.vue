@@ -92,19 +92,28 @@ export default {
 
 <template>
   <div>
-    <div style=" text-align: center;">
-      <input style="background-color: lightblue;" v-model="formData.id" type="text" placeholder="ID">
-      <input style="background-color: lightblue;" v-model="formData.first_name" type="text" placeholder="First Name">
-      <input style="background-color: lightblue;" v-model="formData.last_name" type="text" placeholder="Last Name">
-      <input style="background-color: lightblue;" v-model="formData.collection" type="text" placeholder="Collection">
-    </div><br>
-    <nav id="aviewnav" style=" text-align: center;">
+    <div class="input-group">
+      <label for="id">ID:</label>
+      <input v-model="formData.id" type="text" id="id" class="styled-input" placeholder="Enter ID">
+    </div>
+    <div class="input-group">
+      <label for="first_name">First Name:</label>
+      <input v-model="formData.first_name" type="text" id="first_name" class="styled-input" placeholder="Enter First Name">
+    </div>
+    <div class="input-group">
+      <label for="last_name">Last Name:</label>
+      <input v-model="formData.last_name" type="text" id="last_name" class="styled-input" placeholder="Enter Last Name">
+    </div>
+    <div class="input-group">
+      <label for="collection">Collection:</label>
+      <input v-model="formData.collection" type="text" id="collection" class="styled-input" placeholder="Enter Collection">
+    </div>
+    <nav id="aviewnav" class="action-buttons">
       <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" @click="create">Add</v-btn>
-      <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" @click="update">Update </v-btn>
+      <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" @click="update">Update</v-btn>
       <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" @click="deleteDocument">Delete</v-btn>
     </nav>
     <br>
-    
 
     <div>
       <table>
@@ -132,23 +141,46 @@ export default {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: gr;
+    
   }
 
   th, td {
-    border: 1px solid #131010;
+    border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
   }
 
   th {
     background-color: #131010;
+    color: white;
   }
 
-  #aviewnav {
+  .input-group {
+    display: inline-block;
+    margin-right: 20px;
   }
 
-  input {
-    margin: 5px;
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .styled-input {
+    width: 150px;
+    padding: 8px;
+    border: 1px solid #494848;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .action-buttons {
+    display: inline-block;
+    margin-top: 20px;
+  }
+
+  v-btn {
+    background-color: #2ecc71;
+    color: white;
   }
 </style>
