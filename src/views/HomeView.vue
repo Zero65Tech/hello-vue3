@@ -1,5 +1,4 @@
 <script>
-// Import Axios at the beginning of your script
 import axios from 'axios';
 
 export default {
@@ -19,30 +18,26 @@ export default {
   },
   methods: {
     fetchDocumentList() {
-      // Use Axios for the GET request
       axios.get('http://localhost:3000/users')
         .then(response => {
           this.documentList = response.data;
         })
         .catch(error => {
           console.error('Error fetching document list:', error);
-          // Handle errors here
         });
     },
     create() {
-      // Use Axios for the POST request
       axios.post('http://localhost:3000/users', this.formData)
         .then(response => {
           console.log('Document added successfully:', response.data);
-          this.fetchDocumentList(); // Refresh the document list after adding
+          this.fetchDocumentList(); 
         })
         .catch(error => {
           console.error('Error adding document:', error);
-          // Handle errors here
+          
         });
     },
     update() {
-      // Use Axios for the PUT request
       axios.put(`http://localhost:3000/users/${this.formData.id}`, this.formData)
         .then(response => {
           console.log('Document updated successfully:', response.data);
@@ -50,11 +45,9 @@ export default {
         })
         .catch(error => {
           console.error('Error updating document:', error);
-          // Handle errors here
         });
     },
     deleteDocument() {
-      // Use Axios for the DELETE request
       axios.delete(`http://localhost:3000/users/${this.formData.id}`)
         .then(response => {
           console.log('Document deleted successfully');
