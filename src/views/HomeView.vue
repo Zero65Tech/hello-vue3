@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     fetchDocumentList() {
-      axios.get('http://localhost:3000/users')
+      axios.get('http://localhost:3000/list')
         .then(response => {
           this.documentList = response.data;
         })
@@ -27,7 +27,7 @@ export default {
         });
     },
     create() {
-      axios.post('http://localhost:3000/users', this.formData)
+      axios.post('http://localhost:3000/add', this.formData)
         .then(response => {
           console.log('Document added successfully:', response.data);
           this.fetchDocumentList(); 
