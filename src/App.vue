@@ -1,158 +1,85 @@
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+
 <template>
-  <v-app>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
-    <v-app-bar density="compact" color="primary" >
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
 
-      <router-link to="/" class="mx-4">
-        <img
-          alt="Logo"
-          src="@/assets/logo.svg"
-          width="40"
-          transition="scale-transition"
-        />
-      </router-link>
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
 
-      <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/">Home</v-btn>
-      <v-btn :exact="true" variant="flat" :ripple="false" class="ml-4" to="/about">About</v-btn>
-
-      <v-spacer></v-spacer>
-
-      <div ref="GoogleLoginButton" class="mr-4" style="display:none;"></div>
-
-    </v-app-bar>
-
-    <v-main class="bg-grey">
-      <v-container fluid>
-        <RouterView :doGet="doGet" :doPost="doPost" />
-      </v-container>
-    </v-main>
-
-    <v-snackbar v-model="snackbar" timeout="2500">
-      {{ snackbarText }}
-      <template v-slot:actions>
-        <v-btn @click="snackbar = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-
-  </v-app>
+  <RouterView />
 </template>
 
-<script>
-import { RouterLink, RouterView } from 'vue-router'
-import axios from "axios";
+<style scoped>
+header {
+  line-height: 1.5;
+  max-height: 100vh;
+}
 
-export default {
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
+}
 
-  data() {
-    return {
-      location: undefined,
-      session: undefined,
-      snackbar: false,
-      snackbarText: '',
-    }
-  },
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
 
-  async mounted() {
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
 
-    navigator.geolocation.watchPosition(position => {
-      this.location = {
-        coords: {
-          latitude : position.coords.latitude,
-          longitude: position.coords.longitude,
-          accuracy : position.coords.accuracy
-        },
-        timestamp: position.timestamp
-      }
-    });
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
 
-    for(let cookie of document.cookie.split(';')) {
-      cookie = cookie.trim();
-      if(cookie.startsWith('sessionId=') && cookie != 'sessionId=') {
-        this.session = { id: cookie.substring('sessionId='.length) };
-        break;
-      }
-    }
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
 
-    if(this.session) {
-      this.session = await this.doGet('/api/user/session');
-    } else {
-      this.session = await this.doPost('/api/user/session', { userAgent: navigator.userAgent });
-      document.cookie = `sessionId=${ this.session.id }; path=/;`;
-    }
+nav a:first-of-type {
+  border: 0;
+}
 
-    if(this.session.status == 'active') {
-      this.$refs['GoogleLoginButton'].style.display = '';
-      window.google.accounts.id.initialize({
-        client_id: '220251834863-p6gimkv0cgepodik4c1s8cs471dv9ioq.apps.googleusercontent.com',
-        callback: async (resp) => {
-          await this.doPost('/api/user/google-login', { idToken: resp.credential });
-          window.location.reload();
-        },
-        auto_select: true
-      });
-      window.google.accounts.id.renderButton(this.$refs['GoogleLoginButton'], {});
-      window.google.accounts.id.prompt();
-    } else if(this.session.status == 'loggedin') {
-      setInterval(() => {
-        this.doPost('/api/user/session/ping', { userAgent: navigator.userAgent, location: this.location });
-      }, 60 * 1000);
-    }
-
-  },
-
-  methods: {
-
-    async doRequest(req, retry) {
-
-      let resp = null;
-      let options = { ...req, validateStatus: status => [ 200, 201, 400, 401, 403 ].includes(status) };
-      if(retry) {
-        try {
-          resp = await axios(options);
-        } catch(e) {
-          await new Promise(resolve => setTimeout(resolve, 100));
-          return await this.doRequest(req, retry - 1);
-        }
-      } else {
-        resp = await axios(options);
-      }
-
-      if(resp.status == 401) {
-        document.cookie = 'sessionId=; path=/;';
-        window.location.reload();
-      } else if(resp.status == 201 || resp.status == 400 || resp.status == 403) {
-        while(this.snackbar)
-          await new Promise(resolve => setTimeout(resolve, 100));
-        this.snackbarText = resp.data;
-        this.snackbar = true;
-      } else {
-        return resp.data;
-      }
-
-    },
-
-    async doGet(api, query = {}, retry = 3) {
-      return await this.doRequest({ method: 'get', url: api, params: query }, retry);
-    },
-
-    async doPost(api, body = {}, retry = 0) {
-
-      let data = await this.doRequest({ method: 'post', url: api, data: body }, retry);
-
-      if(data && data.message) {
-        while(this.snackbar)
-          await new Promise(resolve => setTimeout(resolve, 100));
-        this.snackbarText = data.message;
-        this.snackbar = true;
-      }
-
-      return data;
-
-    }
-
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
   }
 
-};
-</script>
+  .logo {
+    margin: 0 2rem 0 0;
+  }
+
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+    margin-top: 1rem;
+  }
+}
+</style>
