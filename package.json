@@ -1,7 +1,7 @@
 {
   "author": "Prashant Gupta @ Zero65 Technologies Pvt. Ltd.",
   "name": "hello-vue3",
-  "version": "3.0.0",
+  "version": "0.3.0",
   "description": "Hello Vue3 App",
   "private": true,
   "type": "module",
