@@ -1,6 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { useCounterStore } from './stores/counter.store'
+const counter = useCounterStore()
 </script>
 
 <template>
@@ -9,7 +11,15 @@ import HelloWorld from './components/HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
+      <div>
+        <p>Count: <span>{{ counter.count }}</span></p>
+        <p>Double Count: <span>{{ counter.doubleCount }}</span></p>
 
+        <div>
+          <button @click="counter.decrement()">-</button>
+          <button @click="counter.increment()">+</button>
+        </div>
+      </div>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
